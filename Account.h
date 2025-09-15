@@ -14,7 +14,7 @@ class Account{
         void run();
         Account();
         Transaction newTransaction();
-        void addTransaction(Transaction);
+        void addTransaction(Transaction t);
         void clearSave();
         void removeTransaction(int id);
         void printTransactionsByDate(const std::string& date) const;
