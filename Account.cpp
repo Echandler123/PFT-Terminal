@@ -52,6 +52,12 @@ void Account::run() {
     }
     saveToFile();
 }
+void Account::addTransaction(Transaction tx) {
+    transactions.push_back(tx);
+}
+std::vector<Transaction> Account::getTransactions() const {
+    return transactions;
+}
 void Account::clearSave() {
     std::ofstream file("transactions.txt", std::ios::trunc);
     for (int i =0; i < transactions.size(); i++) {
