@@ -9,5 +9,6 @@ Persistence: File I/O with serialization/deserialization of transactions.
 
 Features: Input validation (dates, types, amounts), dynamic rendering of transactions, and persistent storage across sessions.
 
-*Was not created on September 9th; it is a branch of a private repo I have that I was using originally.
+*Was not created on September 9th; it is a downloaded branch of one of my private repos that I was using originally. 
+  I made a new repo for this branch as my private version was purely for experimentation and got to messy
 
