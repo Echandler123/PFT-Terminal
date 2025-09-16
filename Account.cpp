@@ -6,7 +6,7 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
-
+#include <cstdio>
 Account::Account() = default;
 void Account::run() {
     loadFromFile();
@@ -61,9 +61,10 @@ std::vector<Transaction> Account::getTransactions() const {
 void Account::clearSave() {
     std::ofstream file("transactions.txt", std::ios::trunc);
     for (int i =0; i < transactions.size(); i++) {
-            transactions.erase(transactions.begin() + i);
+            transactions.clear();
     }
     file.close();
+    remove("transactions.txt");
 }
 void Account::importFromFile(const std::string& filename) {
     std::ifstream file(filename);
@@ -280,4 +281,3 @@ void Account::printAllExpense() const{
     }
     std::cout << "Total Expenses: -" << totalAmount << std::endl;
 }
-

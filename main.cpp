@@ -61,11 +61,12 @@ int main() {
         res.end();
     });
     // Clear all transactions
-    CROW_ROUTE(app, "/cleartransactions").methods(crow::HTTPMethod::POST)([&](const crow::request& req, crow::response& res){
-        acc.clearSave();  // Your existing method to clear vector and file
+    CROW_ROUTE(app, "/cleartransactions").methods(crow::HTTPMethod::POST)([&]( crow::response& res){
+        acc.clearSave();
         res.code = 200;
         res.write("All transactions cleared");
         res.end();
+        acc.clearSave();
     });
 
 
@@ -79,4 +80,3 @@ int main() {
 
     return 0;
 }
-

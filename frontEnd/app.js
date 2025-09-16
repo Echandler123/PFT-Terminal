@@ -43,7 +43,7 @@ function isValidDate(dateString) {
     );
 }
 
-transactionForm.addEventListener("submit", function() {
+transactionForm.addEventListener("submit", function(event) {
     event.preventDefault();
     const description = document.getElementById("description").value;
     const amount = parseFloat(document.getElementById("amount").value);
@@ -81,47 +81,32 @@ transactionForm.addEventListener("submit", function() {
         },
         body: JSON.stringify(newTransaction)
     })
-    .then(response => {
-        if (response.ok) {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-            <td>${newTransaction.date}</td>
-            <td>${newTransaction.description}</td>
-            <td>${newTransaction.amount}</td>
-            <td>${newTransaction.type}</td>
-            `;
-            transactionsBody.appendChild(row);
-            document.querySelectorAll(".remove-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const id = btn.getAttribute("data-id");
-                    removeTransaction(id);
-                });
-            });
-            transactionForm.reset();
-        } else {
-            console.error("Failed to add transaction");
-        }
+        .then(response => {
+            if (response.ok) {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${newTransaction.date}</td>
+                    <td>${newTransaction.description}</td>
+                    <td>${newTransaction.amount}</td>
+                    <td>${newTransaction.type}</td>
+                `;
+                transactionsBody.appendChild(row);
+            } else {
+                console.error("Failed to add transaction");
+            }
 
-    })
-    .catch(error => console.error("Error adding transaction:", error));
+        })
+        .catch(error => console.error("Error adding transaction:", error));
 });
 
 clearBtn.addEventListener("click", () => {
     fetch("/cleartransactions", { method: "POST" })
         .then(response => response.text())
         .then(msg => {
-            console.log(msg); // debug: should print "All transactions cleared"
+            console.log(msg);
             // Clear the table visually
             transactionsBody.innerHTML = "";
         })
         .catch(err => console.error("Error clearing transactions:", err));
+
 });
-function removeTransaction(id) {
-    fetch(`/removetransaction/${id}`, { method: "POST" })
-        .then(resp => resp.text())
-        .then(msg => {
-            console.log(msg);
-            loadTransactions(); // refresh table after deletion
-        })
-        .catch(err => console.error("Error removing transaction:", err));
-}
