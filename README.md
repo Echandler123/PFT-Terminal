@@ -1,5 +1,5 @@
 Personal Finance Tracker
-A full-stack C++ project with a basic front end that lets users add, view, and manage income/expense transactions with persistent storage.
+A full-stack C++ project with a basic front end that runs locally and lets users add, view, and manage income/expense transactions with persistent storage.
 
 Backend: C++ with Crow web framework, handling RESTful API routes (/transactions, /newtransaction, /cleartransactions).
 
