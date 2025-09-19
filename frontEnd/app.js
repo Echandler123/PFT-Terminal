@@ -1,6 +1,7 @@
 const transactionsBody = document.getElementById("transactions-body");
 const errorEl = document.getElementById("error-message");
 const clearBtn = document.getElementById("clear-all");
+const transactionForm = document.getElementById("transaction-form");
 document.addEventListener("DOMContentLoaded", loadTransactions);
 console.log("JS loaded")
 function loadTransactions() {
@@ -22,15 +23,14 @@ function loadTransactions() {
         .catch(error => console.error("Error fetching transactions:", error));
 }
 
-const transactionForm = document.getElementById("transaction-form");
 
 function isValidDate(dateString) {
     // Check format: MM-DD-YYYY
     const regex = /^(0[1-9]|1[0-2])-(0[1-9]|[0-2][0-9]|3[01])-\d{4}$/;
-    if (!regex.test(dateString)) return false;
+    const [month, day, year] = dateString.split("-").map(Number);
+    if (!regex.test(dateString) || year > 3000 || year < 1900 ) return false;
 
     // Parse components
-    const [month, day, year] = dateString.split("-").map(Number);
 
     // Create a Date object (month is 0-indexed in JS)
     const date = new Date(year, month - 1, day);
@@ -56,16 +56,25 @@ transactionForm.addEventListener("submit", function(event) {
 
     if (isNaN(amount) || amount <= 0) {
         errorEl.textContent = "Amount must be a positive number.";
+        setTimeout(() => {
+            errorEl.textContent = ""; // Clear after 5 seconds
+        }, 5000);
         return;
     }
 
     if (!isValidDate(date)) {
         errorEl.textContent = "Please enter a valid date in MM-DD-YYYY format.";
+        setTimeout(() => {
+            errorEl.textContent = ""; // Clear after 5 seconds
+        }, 5000);
         return;
     }
 
     if (type !== "Income" && type !== "Expense") {
         errorEl.textContent = "Transaction type must be Income or Expense.";
+        setTimeout(() => {
+            errorEl.textContent = ""; // Clear after 5 seconds
+        }, 5000);
         return;
     }
     const newTransaction = {
