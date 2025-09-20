@@ -1,4 +1,5 @@
 *Not a real financial application
+
 Personal Finance Tracker
 A full-stack C++ project with a basic front end that runs locally and lets users add, view, and manage income/expense transactions with persistent storage.
 
