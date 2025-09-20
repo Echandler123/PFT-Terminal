@@ -20,7 +20,7 @@ int main() {
     CROW_ROUTE(app, "/")([](){
         return loadFile("../frontEnd/index.html");
     });
-    CROW_ROUTE(app, "/transactions")([&](crow::response& res){
+    CROW_ROUTE(app, "/transactions").methods(crow::HTTPMethod::GET)([&](crow::response& res){
         crow::json::wvalue jsonTransactions;
         const auto& transactions = acc.getTransactions();
         for (size_t i = 0; i < transactions.size(); ++i) {
@@ -61,7 +61,7 @@ int main() {
         res.end();
     });
     // Clear all transactions
-    CROW_ROUTE(app, "/cleartransactions").methods(crow::HTTPMethod::POST)([&]( crow::response& res){
+    CROW_ROUTE(app, "/cleartransactions").methods(crow::HTTPMethod::DELETE)([&]( crow::response& res){
         acc.clearSave();
         res.code = 200;
         res.write("All transactions cleared");

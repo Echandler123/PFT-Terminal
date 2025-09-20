@@ -5,7 +5,7 @@ const transactionForm = document.getElementById("transaction-form");
 document.addEventListener("DOMContentLoaded", loadTransactions);
 console.log("JS loaded")
 function loadTransactions() {
-    fetch("/transactions")
+    fetch("/transactions",{ method: "GET"})
         .then(response => response.json())
         .then(transactions => {
             // Loop through each transaction and create a table row
@@ -109,7 +109,7 @@ transactionForm.addEventListener("submit", function(event) {
 });
 
 clearBtn.addEventListener("click", () => {
-    fetch("/cleartransactions", { method: "POST" })
+    fetch("/cleartransactions", { method: "DELETE" })
         .then(response => response.text())
         .then(msg => {
             console.log(msg);
