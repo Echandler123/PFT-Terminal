@@ -10,14 +10,15 @@ function loadTransactions() {
         .then(transactions => {
             // Loop through each transaction and create a table row
             transactions.forEach(t => {
-                const row = document.createElement("tr"); // Create a new row
+                const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${t.date}</td>
                     <td>${t.description}</td>
                     <td>${t.amount}</td>
                     <td>${t.type}</td>
                 `;
-                transactionsBody.appendChild(row); // Add the row to the table
+                // Add the row to the table
+                transactionsBody.appendChild(row);
             });
         })
         .catch(error => console.error("Error fetching transactions:", error));
@@ -30,9 +31,6 @@ function isValidDate(dateString) {
     const [month, day, year] = dateString.split("-").map(Number);
     if (!regex.test(dateString) || year > 3000 || year < 1900 ) return false;
 
-    // Parse components
-
-    // Create a Date object (month is 0-indexed in JS)
     const date = new Date(year, month - 1, day);
 
     // Check if Date object actually matches input (catches invalid dates like 02-30-2025)
@@ -56,24 +54,27 @@ transactionForm.addEventListener("submit", function(event) {
 
     if (isNaN(amount) || amount <= 0) {
         errorEl.textContent = "Amount must be a positive number.";
+        // Clear after 5 seconds
         setTimeout(() => {
-            errorEl.textContent = ""; // Clear after 5 seconds
+            errorEl.textContent = "";
         }, 5000);
         return;
     }
 
     if (!isValidDate(date)) {
         errorEl.textContent = "Please enter a valid date in MM-DD-YYYY format.";
+        // Clear after 5 seconds
         setTimeout(() => {
-            errorEl.textContent = ""; // Clear after 5 seconds
+            errorEl.textContent = "";
         }, 5000);
         return;
     }
 
     if (type !== "Income" && type !== "Expense") {
         errorEl.textContent = "Transaction type must be Income or Expense.";
+        // Clear after 5 seconds
         setTimeout(() => {
-            errorEl.textContent = ""; // Clear after 5 seconds
+            errorEl.textContent = "";
         }, 5000);
         return;
     }
